@@ -60,7 +60,7 @@ app.post('/login', (req, res) => {
             connection.query(`insert into sessionid (userid, string, expire_date) \
             values ('${results[0].uid}', '${sessionId}', DATE_ADD(NOW(),INTERVAL + 1 day))`, (error2, results2) => {
                 res.cookie('sessionId', sessionId, {
-                    httpOnly: true, // 클라이언트에서 쿠키 조작 방지
+                    httpOnly: false, // 클라이언트에서 쿠키 조작 방지
                     secure: true // HTTPS에서만 전송
                 });
                 res.send(results);
