@@ -74,6 +74,7 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/usercheck', (req, res) => {
+    console.log("123");
     connection.query(`select * from sessionid where string='${req.cookies.sessionId}';`, (error, results) => {
         if (results.length == 0) res.send(results);
         else {
