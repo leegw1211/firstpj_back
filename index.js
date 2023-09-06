@@ -5,7 +5,10 @@ const fs = require('fs');
 const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+    origin:'*'
+}
+));
 app.use(express.json());
 app.use(express.urlencoded( {extended : false } ));
 const maria = require('mysql'); // 호환됌!!!
