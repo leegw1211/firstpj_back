@@ -65,7 +65,8 @@ app.post('/login', (req, res) => {
             values ('${results[0].uid}', '${sessionId}', DATE_ADD(NOW(),INTERVAL + 1 day))`, (error2, results2) => {
                 res.cookie('sessionId', sessionId, {
                     httpOnly: false, // 클라이언트에서 쿠키 조작 방지
-                    secure: true // HTTPS에서만 전송
+                    secure: true, // HTTPS에서만 전송
+                    sameSite: 'none'
                 });
                 res.send(results);
             })
