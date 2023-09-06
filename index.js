@@ -66,6 +66,7 @@ app.post('/login', (req, res) => {
                     httpOnly: false, // 클라이언트에서 쿠키 조작 방지
                     secure: true // HTTPS에서만 전송
                 });
+                console.log(res.getHeaders());
                 res.send(results);
             })
         };
