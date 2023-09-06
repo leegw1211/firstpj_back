@@ -59,6 +59,8 @@ app.post('/login', (req, res) => {
             var sessionId = generateSessionId();
             connection.query(`insert into sessionid (userid, string, expire_date) \
             values ('${results[0].uid}', '${sessionId}', DATE_ADD(NOW(),INTERVAL + 1 day))`, (error2, results2) => {
+                res.setHeader('Access-Control-Allow-origin', 'https://pnucse99.netlify.app/');
+                res.setHeader('Access-Control-Allow-Credentials', 'true');
                 res.cookie('sessionId', sessionId, {
                     httpOnly: true, // 클라이언트에서 쿠키 조작 방지
                     secure: true // HTTPS에서만 전송
