@@ -52,18 +52,17 @@ app.post('/register', (req, res) => {
     }
 });
 
-const corsOptions = {
-    origin: 'https://pnucse99.netlify.app', // 허용할 도메인
-    credentials: true // 인증 정보를 포함한 요청 허용 여부
-  };
 
-app.post('/login', cors(corsOptions), (req, res) => {
+app.post('/login', (req, res) => {
     connection.query(`select * from user where username='${req.body.loginId}' and password='${req.body.loginPw}'`, (error, results) => {
         if (results.length === 0) res.send(results);
         else {
             var sessionId = generateSessionId();
             connection.query(`insert into sessionid (userid, string, expire_date) \
             values ('${results[0].uid}', '${sessionId}', DATE_ADD(NOW(),INTERVAL + 1 day))`, (error2, results2) => {
+                res.setHeader('Access-Control-Allow-origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS'); // 쿠키 주고받기 허용
+                res.setHeader('Access-Control-Allow-Credentials', 'true');
                 res.cookie('sessionId', sessionId, {
                     httpOnly: false, // 클라이언트에서 쿠키 조작 방지
                     secure: true // HTTPS에서만 전송
