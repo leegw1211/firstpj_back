@@ -5,10 +5,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
-app.use(cors({
-    origin: 'https://pnucse99.netlify.app/', // 출처 허용 옵션
-    credential: 'true' // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
-}));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded( {extended : false } ));
 const maria = require('mysql'); // 호환됌!!!
@@ -62,6 +59,8 @@ app.post('/login', (req, res) => {
             var sessionId = generateSessionId();
             connection.query(`insert into sessionid (userid, string, expire_date) \
             values ('${results[0].uid}', '${sessionId}', DATE_ADD(NOW(),INTERVAL + 1 day))`, (error2, results2) => {
+                res.setHeader('Access-Control-Allow-origin', 'https://pnucse99.netlify.app');
+                res.setHeader('Access-Control-Allow-Credentials', 'true');
                 res.cookie('sessionId', sessionId, {
                     httpOnly: false, // 클라이언트에서 쿠키 조작 방지
                     secure: true // HTTPS에서만 전송
