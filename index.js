@@ -81,7 +81,7 @@ app.post('/logout', (req, res) => {
         httpOnly: true, // 클라이언트에서 쿠키 조작 방지
         secure: true // HTTPS에서만 전송
     });
-    res.send(results);
+    res.send();
 });
 
 app.post('/usercheck', (req, res) => {
