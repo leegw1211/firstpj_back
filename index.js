@@ -5,7 +5,11 @@ const fs = require('fs');
 const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
-app.use(cors())
+app.use(cors({
+    origin: 'https://pnucse99.netlify.app', // 여기에 허용할 도메인을 지정합니다.
+    credentials: true,
+    optionsSuccessStatus: 200 // 브라우저에게 성공 상태 코드를 반환합니다.
+}))
 app.use(express.json());
 app.use(express.urlencoded( {extended : false } ));
 const maria = require('mysql'); // 호환됌!!!
@@ -50,7 +54,7 @@ app.post('/register', (req, res) => {
             else res.send();
         });
     }
-});
+}); 
 
 app.post('/login', (req, res) => {
     connection.query(`select * from user where username='${req.body.loginId}' and password='${req.body.loginPw}'`, (error, results) => {
@@ -60,6 +64,7 @@ app.post('/login', (req, res) => {
             connection.query(`insert into sessionid (userid, string, expire_date) \
             values ('${results[0].uid}', '${sessionId}', DATE_ADD(NOW(),INTERVAL + 1 day))`, (error2, results2) => {
                 res.cookie('sessionId', sessionId, {
+                    sameSite: 'none',
                     httpOnly: true, // 클라이언트에서 쿠키 조작 방지
                     secure: true // HTTPS에서만 전송
                 });
@@ -67,6 +72,16 @@ app.post('/login', (req, res) => {
             })
         };
     });
+});
+
+app.post('/logout', (req, res) => {
+    res.cookie('sessionId', '', {
+        sameSite: 'none',
+        expires: new Date(0),
+        httpOnly: true, // 클라이언트에서 쿠키 조작 방지
+        secure: true // HTTPS에서만 전송
+    });
+    res.send();
 });
 
 app.post('/usercheck', (req, res) => {
