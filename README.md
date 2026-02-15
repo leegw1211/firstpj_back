@@ -101,19 +101,6 @@
 
 ---
 
-## 저장소 설명(Repository Description) 제안
-
-GitHub 저장소 설명(짧은 한 줄)은 아래 문구를 추천합니다.
-
-**`컴퓨터공학과 2학년 때 만든 첫 프로젝트: 맛집 리뷰 웹사이트 백엔드 (Express + MySQL)`**
-
-대안:
-
-- `My first CS sophomore project: restaurant review web backend built with Express and MySQL.`
-- `2학년 첫 웹개발 프로젝트 백엔드 아카이브 — 맛집 리뷰 사이트.`
-
----
-
 ## 라이선스
 
 별도 라이선스 표기가 없다면 기본적으로 All rights reserved 상태입니다.  
